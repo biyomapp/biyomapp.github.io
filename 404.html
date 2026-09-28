@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deneme · Biyom</title>
+<meta name="description" content="Deneme: cevaplarını Biyom&#x27;da gir, netini gör.">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main>
+  <a class="brand" href="/">Biyom</a><span class="kicker">Deneme</span>
+  <h1 id="title">Deneme</h1>
+  <p class="muted" id="meta">Föydeki kodla aç</p>
+
+  <div class="card">
+    <h2>Cevaplarını Biyom'da gir</h2>
+    <p class="muted">Föydeki işaretlerini uygulamada gir; netini, ünite dağılımını ve yanlışlarının nedenini gör.</p>
+    <a class="button" id="open" href="biyom://d/">Biyom'da Aç</a>
+  </div>
+
+  <div class="card">
+    <h2>Biyom yüklü değil mi?</h2>
+    <a class="button secondary" href="#" aria-disabled="true">App Store'da yakında</a>
+    <ol class="muted">
+      <li>Biyom'u yükle.</li>
+      <li>Föydeki QR'ı yeniden okut; ya da uygulamada Pratik › Denemeler › "Föydeki kodla aç" alanına <span class="code" id="code"></span> yaz.</li>
+    </ol>
+  </div>
+
+  <footer class="muted"><a href="https://erenokms533-netizen.github.io/biyom-legal/gizlilik.html">Gizlilik</a></footer>
+</main>
+<script>
+(function () {
+  var match = location.pathname.match(/^\/d\/([A-Za-z0-9-]{1,32})\/?$/);
+  if (!match) {
+    document.getElementById('title').textContent = 'Sayfa bulunamadı';
+    document.getElementById('meta').textContent = 'Föydeki QR\'ı yeniden okut ya da kodu uygulamada yaz.';
+    return;
+  }
+  var code = match[1].toUpperCase();
+  document.getElementById('title').textContent = 'Deneme ' + code;
+  document.getElementById('code').textContent = code;
+  document.getElementById('open').href = 'biyom://d/' + code;
+})();
+</script>
+</body>
+</html>

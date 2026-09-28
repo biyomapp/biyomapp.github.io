@@ -1,0 +1,12 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["LX32U24LPN.com.eren.MyApp"],
+        "components": [
+          { "/": "/d/*", "comment": "Deneme föylerindeki QR: /d/<deneme kodu>" }
+        ]
+      }
+    ]
+  }
+}
