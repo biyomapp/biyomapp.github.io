@@ -9,13 +9,13 @@
 </head>
 <body>
 <main>
-  <a class="brand" href="/">Biyom</a><span class="kicker">Deneme</span>
+  <a class="brand" href="/">Biyom</a><span class="kicker" id="kicker">Deneme</span>
   <h1 id="title">Deneme</h1>
   <p class="muted" id="meta">Föydeki kodla aç</p>
 
   <div class="card">
     <h2>Cevaplarını Biyom'da gir</h2>
-    <p class="muted">Föydeki işaretlerini uygulamada gir; netini, ünite dağılımını ve yanlışlarının nedenini gör.</p>
+    <p class="muted" id="lead">Föydeki işaretlerini uygulamada gir; netini, ünite dağılımını ve yanlışlarının nedenini gör.</p>
     <a class="button" id="open" href="biyom://d/">Biyom'da Aç</a>
   </div>
 
@@ -24,7 +24,7 @@
     <a class="button secondary" href="#" aria-disabled="true">App Store'da yakında</a>
     <ol class="muted">
       <li>Biyom'u yükle.</li>
-      <li>Föydeki QR'ı yeniden okut; ya da uygulamada Pratik › Denemeler › "Föydeki kodla aç" alanına <span class="code" id="code"></span> yaz.</li>
+      <li id="hint">Föydeki QR'ı yeniden okut; ya da uygulamada Pratik › Denemeler › "Föydeki kodla aç" alanına <span class="code" id="code"></span> yaz.</li>
     </ol>
   </div>
 
@@ -32,6 +32,20 @@
 </main>
 <script>
 (function () {
+  // Kitapçık QR'ı: /k/<5 harf>. Kitapçık kişiseldir; onu hazırlayan telefonda açılır.
+  var booklet = location.pathname.match(/^\/k\/([A-Za-z0-9]{5})\/?$/);
+  if (booklet) {
+    var raw = booklet[1].toUpperCase();
+    var label = 'K-' + raw;
+    document.title = 'Kitapçık ' + label + ' · Biyom';
+    document.getElementById('kicker').textContent = 'Kitapçık';
+    document.getElementById('title').textContent = 'Kitapçık ' + label;
+    document.getElementById('meta').textContent = 'Biyom\'da hazırlanmış kişisel kitapçık';
+    document.getElementById('lead').textContent = 'Kâğıttaki işaretlerini uygulamada gir ya da "Kamerayla oku" ile okut; netini ve yanlışlarının nedenini gör. Kitapçık onu hazırlayan telefonda açılır.';
+    document.getElementById('hint').textContent = 'QR\'ı yeniden okut; ya da uygulamada Kitapçıklarım\'ın arama kutusuna ' + label + ' yaz.';
+    document.getElementById('open').href = 'biyom://k/' + raw;
+    return;
+  }
   var match = location.pathname.match(/^\/d\/([A-Za-z0-9-]{1,32})\/?$/);
   if (!match) {
     document.getElementById('title').textContent = 'Sayfa bulunamadı';
