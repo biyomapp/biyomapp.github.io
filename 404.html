@@ -46,6 +46,20 @@
     document.getElementById('open').href = 'biyom://k/' + raw;
     return;
   }
+  // Yan Yana odasının QR'ı: /oda/<4 hane>. Oda kurucunun telefonunda Bluetooth'la açıktır; arkadaş yanında olmalı.
+  var room = location.pathname.match(/^\/oda\/([0-9]{4})\/?$/);
+  if (room) {
+    var roomCode = room[1];
+    document.title = 'Yan Yana odası ' + roomCode + ' · Biyom';
+    document.getElementById('kicker').textContent = 'Yan Yana';
+    document.getElementById('title').textContent = 'Oda ' + roomCode;
+    document.getElementById('meta').textContent = 'Arkadaşının Biyom\'da açtığı oda';
+    document.querySelector('.card h2').textContent = 'Odaya Biyom\'da katıl';
+    document.getElementById('lead').textContent = 'Aynı soruları arkadaşınla aynı anda çöz; cevaplar herkes kilitleyince birlikte açılır. Bluetooth açık olsun, arkadaşının yanında ol.';
+    document.getElementById('hint').textContent = 'QR\'ı yeniden okut; ya da uygulamada Pratik › Yan Yana › Odaya katıl\'a ' + roomCode + ' yaz.';
+    document.getElementById('open').href = 'biyom://oda/' + roomCode;
+    return;
+  }
   var match = location.pathname.match(/^\/d\/([A-Za-z0-9-]{1,32})\/?$/);
   if (!match) {
     document.getElementById('title').textContent = 'Sayfa bulunamadı';
