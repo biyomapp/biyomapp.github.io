@@ -9,13 +9,13 @@
 </head>
 <body>
 <main>
-  <a class="brand" href="/">Biyom</a><span class="kicker">Deneme</span>
+  <a class="brand" href="/">Biyom</a><span class="kicker" id="kicker">Deneme</span>
   <h1 id="title">AYT Biyoloji Denemesi 4</h1>
   <p class="muted" id="meta">Kod AYT-D04 · 13 soru · önerilen süre 26 dk</p>
 
   <div class="card">
     <h2>Cevaplarını Biyom'da gir</h2>
-    <p class="muted">Föydeki işaretlerini uygulamada gir; netini, ünite dağılımını ve yanlışlarının nedenini gör.</p>
+    <p class="muted" id="lead">Föydeki işaretlerini uygulamada gir; netini, ünite dağılımını ve yanlışlarının nedenini gör.</p>
     <a class="button" id="open" href="biyom://d/AYT-D04">Biyom'da Aç</a>
   </div>
 
@@ -24,12 +24,25 @@
     <a class="button secondary" href="#" aria-disabled="true">App Store'da yakında</a>
     <ol class="muted">
       <li>Biyom'u yükle.</li>
-      <li>Föydeki QR'ı yeniden okut; ya da uygulamada Pratik › Denemeler › "Föydeki kodla aç" alanına <span class="code" id="code">AYT-D04</span> yaz.</li>
+      <li id="hint">Föydeki QR'ı yeniden okut; ya da uygulamada Pratik › Denemeler › "Föydeki kodla aç" alanına <span class="code" id="code">AYT-D04</span> yaz.</li>
     </ol>
   </div>
 
   <footer class="muted"><a href="https://erenokms533-netizen.github.io/biyom-legal/gizlilik.html">Gizlilik</a></footer>
 </main>
-
+<script>
+(function () {
+  function challenge(code) {
+    var raw = new URLSearchParams(location.search).get('n');
+    var net = raw === null ? NaN : parseFloat(raw);
+    if (!isFinite(net) || net < -40 || net > 160) return;
+    var text = net.toFixed(2).replace(/\.?0+$/, '').replace('.', ',');
+    document.querySelector('.card h2').textContent = 'Arkadaşın bu denemede ' + text + ' net yaptı';
+    document.getElementById('lead').textContent = 'Aynı denemeyi Biyom\'da çöz; netin arkadaşınınkiyle yan yana görünür. Geçebilir misin?';
+    document.getElementById('open').href = 'biyom://d/' + code + '?n=' + encodeURIComponent(raw);
+  }
+  challenge(document.getElementById('code').textContent);
+})();
+</script>
 </body>
 </html>

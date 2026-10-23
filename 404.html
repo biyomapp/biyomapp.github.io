@@ -32,6 +32,15 @@
 </main>
 <script>
 (function () {
+  function challenge(code) {
+    var raw = new URLSearchParams(location.search).get('n');
+    var net = raw === null ? NaN : parseFloat(raw);
+    if (!isFinite(net) || net < -40 || net > 160) return;
+    var text = net.toFixed(2).replace(/\.?0+$/, '').replace('.', ',');
+    document.querySelector('.card h2').textContent = 'Arkadaşın bu denemede ' + text + ' net yaptı';
+    document.getElementById('lead').textContent = 'Aynı denemeyi Biyom\'da çöz; netin arkadaşınınkiyle yan yana görünür. Geçebilir misin?';
+    document.getElementById('open').href = 'biyom://d/' + code + '?n=' + encodeURIComponent(raw);
+  }
   // Kitapçık QR'ı: /k/<5 harf>. Kitapçık kişiseldir; onu hazırlayan telefonda açılır.
   var booklet = location.pathname.match(/^\/k\/([A-Za-z0-9]{5})\/?$/);
   if (booklet) {
@@ -70,6 +79,7 @@
   document.getElementById('title').textContent = 'Deneme ' + code;
   document.getElementById('code').textContent = code;
   document.getElementById('open').href = 'biyom://d/' + code;
+  challenge(code);
 })();
 </script>
 </body>
